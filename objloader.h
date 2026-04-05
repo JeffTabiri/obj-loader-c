@@ -10,9 +10,10 @@
 #define JADE_ERROR (-1)
 
 typedef struct {
-  size_t num_f;
-  size_t num_v;
-  size_t num_vn;
+  size_t num_faces;
+  size_t num_vertices;
+  size_t num_vertex_normals;
+  size_t num_indices;
   float *vertices;
   int *indices;
   float *normals;
@@ -25,45 +26,40 @@ static int fix_index(int idx, int n) {
   return n + idx;
 }
 
-static int read_obj_file(char *path, object_attrib_t *vertices) {
-
+static int read_obj_file(char *path, object_attrib_t *attrib) {
   char line[LINE_SIZE];
   FILE *fptr;
   fptr = fopen(path, "r");
 
   if (fptr == NULL) {
-    printf("FILE_READING_ERROR\n");
+    printf("FILE::READ::ERROR\n");
     return JADE_ERROR;
   }
 
-  size_t num_f = 0;
-  size_t num_v = 0;
-  size_t num_vn = 0;
-
-  while (fgets((line), 4, fptr)) {
+  // First pass collects info for memory allocation
+  while (fgets((line), LINE_SIZE, fptr)) {
     if (line[0] == 'v' && line[1] == 'n') {
-      num_vn++;
+      attrib->num_vertex_normals++;
     } else if (line[0] == 'v' && line[1] == ' ') {
-      num_v++;
+      attrib->num_vertices++;
     } else if (line[0] == 'f' && line[1] == ' ') {
-      num_f++;
+      attrib->num_faces++;
     }
   }
 
-  rewind(fptr); // we are going to read again, so start from the top.
+  rewind(fptr);
 
-  vertices->num_f = num_f;
-  vertices->num_v = num_v;
-  vertices->num_vn = num_vn;
-  vertices->vertices = malloc(num_v * 3 * sizeof(float));
-  vertices->normals = malloc(num_vn * 3 * sizeof(float));
-  vertices->indices = malloc(num_f * 3 * sizeof(unsigned int));
+  attrib->vertices = malloc(attrib->num_vertices * 3 * sizeof(float));
+  attrib->normals = malloc(attrib->num_vertex_normals * 3 * sizeof(float));
+  attrib->indices = malloc(attrib->num_faces * 3 * sizeof(unsigned int));
+  attrib->num_indices = attrib->num_faces * 3;
 
-  size_t current_v = 0;
-  size_t current_vn = 0;
-  size_t current_indice = 0;
+  size_t vertex_count = 0;
+  size_t vertex_normal_count = 0;
+  size_t indice_count = 0;
 
   while (fgets(line, LINE_SIZE, fptr)) {
+
     // Skip the comments
     if (line[0] == '#')
       continue;
@@ -73,25 +69,33 @@ static int read_obj_file(char *path, object_attrib_t *vertices) {
       float x = 0.0f;
       float y = 0.0f;
       float z = 0.0f;
-      sscanf((line + 1), "%f%f%f", &x, &y, &z);
 
-      vertices->vertices[(current_v)] = x;
-      vertices->vertices[(current_v + 1)] = y;
-      vertices->vertices[(current_v + 2)] = z;
-      current_v += 3;
+      int result = sscanf((line + 1), "%f%f%f", &x, &y, &z);
+      if (result != 3) {
+        return JADE_ERROR;
+      }
+
+      attrib->vertices[(vertex_count)] = x;
+      attrib->vertices[(vertex_count + 1)] = y;
+      attrib->vertices[(vertex_count + 2)] = z;
+      vertex_count += 3;
     }
 
     // Process vertex normals
-    if (line[0] == 'v' && line[0] == 'n') {
+    if (line[0] == 'v' && line[1] == 'n') {
       float x = 0.0f;
       float y = 0.0f;
       float z = 0.0f;
-      sscanf((line + 1), "%f%f%f", &x, &y, &z);
 
-      vertices->normals[(current_vn)] = x;
-      vertices->normals[(current_vn + 1)] = y;
-      vertices->normals[(current_vn + 2)] = z;
-      current_vn += 3;
+      int result = sscanf((line + 2), "%f%f%f", &x, &y, &z);
+      if (result != 3) {
+        return JADE_ERROR;
+      }
+
+      attrib->normals[(vertex_normal_count)] = x;
+      attrib->normals[(vertex_normal_count + 1)] = y;
+      attrib->normals[(vertex_normal_count + 2)] = z;
+      vertex_normal_count += 3;
     }
 
     // Handle faces
@@ -99,11 +103,16 @@ static int read_obj_file(char *path, object_attrib_t *vertices) {
       int v1 = 0;
       int v2 = 0;
       int v3 = 0;
-      sscanf((line + 1), "%d//%*d %d//%*d %d//%*d", &v1, &v2, &v3);
-      vertices->indices[(current_indice)] = fix_index(v1, num_f * 3);
-      vertices->indices[(current_indice + 1)] = fix_index(v2, num_f * 3);
-      vertices->indices[(current_indice + 2)] = fix_index(v3, num_f * 3);
-      current_indice += 3;
+
+      int result = sscanf((line + 1), "%d//%*d %d//%*d %d//%*d", &v1, &v2, &v3);
+      if (result != 3) {
+        return JADE_ERROR;
+      }
+      size_t max_idx_size = attrib->num_faces * 3;
+      attrib->indices[(indice_count)] = fix_index(v1, max_idx_size);
+      attrib->indices[(indice_count + 1)] = fix_index(v2, max_idx_size);
+      attrib->indices[(indice_count + 2)] = fix_index(v3, max_idx_size);
+      indice_count += 3;
     }
   }
 

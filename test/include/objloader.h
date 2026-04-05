@@ -1,7 +1,6 @@
 #ifndef VIOLA_OBJ_LOADER_H
 #define VIOLA_OBJ_LOADER_H
 
-#include <cstddef>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/build",
+  "command": "/usr/bin/c++  -I/Users/jeff/Desktop/C++_Projects/obj_loader/test/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -std=gnu++20 -arch arm64 -o CMakeFiles/obj_viewer.dir/main.cpp.o -c /Users/jeff/Desktop/C++_Projects/obj_loader/test/main.cpp",
+  "file": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/main.cpp",
+  "output": "CMakeFiles/obj_viewer.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/build",
+  "command": "/usr/bin/c++  -I/Users/jeff/Desktop/C++_Projects/obj_loader/test/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -std=gnu++20 -arch arm64 -o CMakeFiles/obj_viewer.dir/camera.cpp.o -c /Users/jeff/Desktop/C++_Projects/obj_loader/test/camera.cpp",
+  "file": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/camera.cpp",
+  "output": "CMakeFiles/obj_viewer.dir/camera.cpp.o"
+},
+{
+  "directory": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/build",
+  "command": "/usr/bin/cc  -I/Users/jeff/Desktop/C++_Projects/obj_loader/test/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks  -arch arm64 -o CMakeFiles/obj_viewer.dir/glad.c.o -c /Users/jeff/Desktop/C++_Projects/obj_loader/test/glad.c",
+  "file": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/glad.c",
+  "output": "CMakeFiles/obj_viewer.dir/glad.c.o"
+},
+{
+  "directory": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/build",
+  "command": "/usr/bin/c++  -I/Users/jeff/Desktop/C++_Projects/obj_loader/test/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -std=gnu++20 -arch arm64 -o CMakeFiles/obj_viewer.dir/Shader.cpp.o -c /Users/jeff/Desktop/C++_Projects/obj_loader/test/Shader.cpp",
+  "file": "/Users/jeff/Desktop/C++_Projects/obj_loader/test/Shader.cpp",
+  "output": "CMakeFiles/obj_viewer.dir/Shader.cpp.o"
+}
+]

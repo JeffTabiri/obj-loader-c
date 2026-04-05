@@ -1,0 +1,1 @@
+/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/homebrew/opt/libomp/lib CMakeFiles/obj_viewer.dir/main.cpp.o CMakeFiles/obj_viewer.dir/camera.cpp.o CMakeFiles/obj_viewer.dir/glad.c.o CMakeFiles/obj_viewer.dir/Shader.cpp.o -o obj_viewer  /usr/local/lib/libglfw3.a -framework OpenGL -framework Cocoa -framework IOKit -framework CoreFoundation

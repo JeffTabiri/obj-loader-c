@@ -8,9 +8,9 @@ int main(int argc, char *argv[]) {
 
   int result = read_obj_file(path, &object);
 
-  assert(object.num_v == 8);
-  assert(object.num_f == 12);
-  assert(object.num_vn == 6);
+  for (size_t i = 0; i < object.num_indices; i++) {
+    printf("%d\n", object.indices[i]);
+  }
 
   return 1;
 }

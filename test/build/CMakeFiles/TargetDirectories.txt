@@ -1,0 +1,3 @@
+/Users/jeff/Desktop/C++_Projects/obj_loader/test/build/CMakeFiles/obj_viewer.dir
+/Users/jeff/Desktop/C++_Projects/obj_loader/test/build/CMakeFiles/edit_cache.dir
+/Users/jeff/Desktop/C++_Projects/obj_loader/test/build/CMakeFiles/rebuild_cache.dir
